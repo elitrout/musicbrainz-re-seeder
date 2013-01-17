@@ -1,0 +1,52 @@
+<h1>{{release.artist}} - {{release.title}}</h1>
+<a href="/">Return to list</a><p>
+
+<div style="float:left;">
+<table>
+    <tr><th>n</th><th>Title</th><th>Raga</th><th>Tala</th></tr>
+    {%for tr in release.track_set.all %}
+        <tr><td>{{tr.position}}</td><td>{{tr.name}}</td><td>{{tr.raga}}</td>
+            <td>{{tr.tala}}</td></tr>
+    {% endfor %}
+</table>
+</div><div style="float:left;">
+<img src="/{{release.albumid}}/image">
+</div>
+<div style="clear:both; padding-top:20px;">
+{% if release.mbid %}
+
+<p>Release id is set: {{release.mbid}}
+<p>
+{% for rel in rels %}
+   <p>{{rel.artist}}<br>
+   {{rel.instrument}}
+
+{% endfor %}
+
+{% else %}
+    <form method="POST" action="http://musicbrainz.org/release/add" target="_blank">
+        <input type="hidden" name="name" value="{{release.title}}">
+        <input type="hidden" name="type" value="album">
+        <input type="hidden" name="type" value="live">
+        <input type="hidden" name="status" value="Official">
+        <input type="hidden" name="language" value="mul">
+        <input type="hidden" name="script" value="latn">
+        <input type="hidden" name="country" value="IN">
+        <input type="hidden" name="edit_note" value="RE seeded with data provided by the label - http://charsur.com/charsur/index.php">
+        <input type="hidden" name="labels.0.mbid" value="3e188240-9eb5-4842-b7b9-d6c2393211b7">
+        <input type="hidden" name="labels.0.catalog_number" value="{{release.albumid}}">
+        <input type="hidden" name="artist_credit.names.0.name" value="{{release.artist}}">
+        <input type="hidden" name="mediums.0.format" value="Digital Media">
+        {% for tr in release.track_set.all %}
+            <input type="hidden" name="mediums.0.track.{{tr.position|add:-1}}.name" value="{{tr.name}}">
+            <input type="hidden" name="mediums.0.track.{{tr.position|add:-1}}.length" value="{{tr.length}}">
+            {% endfor %}
+        <input type="submit" value="Add release to musicbrainz">
+    </form>
+    <form method="POST">{% csrf_token %}
+        When release is created, put its releaseid here: <input type="text" name="releaseid">
+        <input type="submit" name="submit" value="Update release">
+    </form>
+
+    {% endif %}
+</div>
