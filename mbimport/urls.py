@@ -6,9 +6,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'mbimport.views.home', name='home'),
-    url(r'^(?P<releaseid>CDW[0-9]{3})$', 'mbimport.views.detail', name='detail'),
-    url(r'^(?P<releaseid>CDW[0-9]{3})/image$', 'mbimport.views.image', name='image'),
+    url(r'^musicbrainz-seed/?$', 'mbimport.views.home', name='home'),
+    url(r'^musicbrainz-seed/(?P<releaseid>CDW[0-9]{3})$', 'mbimport.views.detail', name='detail'),
+    url(r'^musicbrainz-seed/(?P<releaseid>CDW[0-9]{3})/image$', 'mbimport.views.image', name='image'),
     # url(r'^mbimport/', include('mbimport.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

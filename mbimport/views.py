@@ -19,8 +19,11 @@ def home(request):
 
 def image(request, releaseid):
     release = Release.objects.get(albumid=releaseid)
-    file_loc = "/home/alastair/CHARSUR_KUTCHERI"
+    file_loc = "/mnt/compmusic/users/amurthy/CHARSUR_KUTCHERI"
     d = os.path.join(file_loc, release.artist, release.title)
+    if not os.path.exists(d):
+        file_loc = "/mnt/compmusic/users/amurthy/CHARSUR_KUTCHERI/AAA_NO_METADATA_ON_FILES"
+        d = os.path.join(file_loc, release.artist, release.title)
     files = os.listdir(d)
     one = files[0]
     f = eyed3.load(os.path.join(d, one))

@@ -1,5 +1,5 @@
 <h1>{{release.artist}} - {{release.title}}</h1>
-<a href="/">Return to list</a><p>
+<a href="/musicbrainz-seed">Return to list</a><p>
 
 <div style="float:left;">
 <table>
@@ -10,7 +10,7 @@
     {% endfor %}
 </table>
 </div><div style="float:left;">
-<img src="/{{release.albumid}}/image">
+<img src="/musicbrainz-seed/{{release.albumid}}/image">
 </div>
 <div style="clear:both; padding-top:20px;">
 {% if release.mbid %}

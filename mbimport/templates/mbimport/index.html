@@ -1,6 +1,6 @@
 {% for r in releases %}
 
-<li><a href="/{{r.albumid}}">
+<li><a href="/musicbrainz-seed/{{r.albumid}}">
     {% if r.mbid %}<strike>{%endif%}
     {{r.artist}} - {{r.title}}
     {% if r.mbid %}</strike>{%endif%}
