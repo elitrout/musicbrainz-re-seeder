@@ -11,7 +11,7 @@ import os
 
 def home(request):
     releases = Release.objects.filter(done=False)
-    template = loader.get_template('mbimport/index.html')
+    template = loader.get_template('carnatic/index.html')
     context = Context({
         'releases': releases,
     })
@@ -34,7 +34,7 @@ def detail(request, releaseid):
     if request.method == "POST":
         release.mbid = request.POST["releaseid"]
         release.save()
-    template = loader.get_template('mbimport/detail.html')
+    template = loader.get_template('carnatic/detail.html')
     context = Context({
         'release': release,
         'rels': release.track_set.all()[0].relationship_set.all()
