@@ -1,21 +1,24 @@
+<html>
+    <head><title>Hindustani release: {{release.title}}</title></head>
+    <body>
 <h1>{{release.artist}} - {{release.title}}</h1>
-<a href="/">Return to list</a><p>
+<a href="{%url h-home %}">Return to list</a><p>
 
 <div style="float:left;">
 <table>
-    <tr><th>n</th><th>Title</th><th>Raga</th><th>Tala</th></tr>
+    <tr><th>n</th><th>Title</th></tr>
     {%for tr in release.track_set.all %}
-        <tr><td>{{tr.position}}</td><td>{{tr.name}}</td><td>{{tr.raga}}</td>
-            <td>{{tr.tala}}</td></tr>
+        <tr><td>{{tr.position}}</td><td>{{tr.name}}</td></tr>
     {% endfor %}
 </table>
 </div><div style="float:left;">
-<img src="/{{release.albumid}}/image">
+<img src="{%url h-image releaseid=release.id %}" width="300px">
 </div>
 <div style="clear:both; padding-top:20px;">
 {% if release.mbid %}
 
-<p>Release id is set: {{release.mbid}}
+<p>Release id : {{release.mbid}}<br>
+<a href="http://musicbrainz.org/release/{{release.mbid}}">View on musicbrainz</a>
 <p>
 {% for rel in rels %}
    <p>{{rel.artist}}<br>
@@ -32,9 +35,7 @@
         <input type="hidden" name="language" value="mul">
         <input type="hidden" name="script" value="latn">
         <input type="hidden" name="country" value="IN">
-        <input type="hidden" name="edit_note" value="RE seeded with data provided by the label - http://charsur.com/charsur/index.php">
-        <input type="hidden" name="labels.0.mbid" value="3e188240-9eb5-4842-b7b9-d6c2393211b7">
-        <input type="hidden" name="labels.0.catalog_number" value="{{release.albumid}}">
+        <input type="hidden" name="edit_note" value="">
         <input type="hidden" name="artist_credit.names.0.name" value="{{release.artist}}">
         <input type="hidden" name="mediums.0.format" value="Digital Media">
         {% for tr in release.track_set.all %}
@@ -50,3 +51,5 @@
 
     {% endif %}
 </div>
+</body>
+</html>

@@ -1,9 +1,27 @@
-{% for r in releases %}
+    <html>
+    <head>
+        <title>Hindustani release seeder</title>
+    </head>
+    <body>
+        <h3>Sankalp</h3>
+{% for r in sankalp %}
 
-<li><a href="/{{r.albumid}}">
+<li><a href="{%url h-detail releaseid=r.id %}">
     {% if r.mbid %}<strike>{%endif%}
     {{r.artist}} - {{r.title}}
     {% if r.mbid %}</strike>{%endif%}
 </a>
 
 {% endfor %}
+
+<h3>Ajay</h3>
+{% for r in ajay %}
+
+<li><a href="{%url h-detail releaseid=r.id %}">
+    {% if r.mbid %}<strike>{%endif%}
+    {{r.artist}} - {{r.title}}
+    {% if r.mbid %}</strike>{%endif%}
+</a>
+
+{% endfor %}
+</body></html>
