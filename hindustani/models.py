@@ -17,6 +17,7 @@ class Track(models.Model):
     position = models.IntegerField()
     length = models.CharField(max_length=10)
     filename = models.CharField(max_length=255)
+    disc = models.IntegerField()
 
     def __unicode__(self):
         return self.name

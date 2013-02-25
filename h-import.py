@@ -21,7 +21,6 @@ def load_single(dirname, files):
         if one.endswith("mp3"):
             f = eyed3.load(os.path.join(dirname, one))
             tags.append(f)
-    print tags
 
     releases = [t.tag.album for t in tags]
     artists = [t.tag.artist for t in tags]
@@ -37,7 +36,10 @@ def load_single(dirname, files):
     rel = Release(title=r, artist=a, year=y)
     rel.save()
     for tr in sorted(tags, key=lambda tg: int(tg.tag.track_num[0])):
-        track = Track(release=rel, name=tr.tag.title, position=tr.tag.track_num[0], length=tr.info.time_secs, filename=tr.path)
+        dsc = tr.tag.disc_num[0]
+        if not dsc:
+            dsc=1
+        track = Track(release=rel, name=tr.tag.title, position=tr.tag.track_num[0], disc=dsc, length=tr.info.time_secs*1000, filename=tr.path)
         if "/Ajay/" in tr.path:
             rel.who = "Ajay"
         else:

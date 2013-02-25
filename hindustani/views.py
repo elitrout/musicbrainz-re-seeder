@@ -31,12 +31,17 @@ def image(request, releaseid):
 
 def detail(request, releaseid):
     release = Release.objects.get(id=releaseid)
+    tracks = release.track_set.order_by('disc', 'position').all()
+    max_disc = max([t.disc for t in tracks])
+
     if request.method == "POST":
         release.mbid = request.POST["releaseid"]
         release.save()
     template = loader.get_template('hindustani/detail.html')
     context = Context({
-        'release': release
+        'release': release,
+        'tracks': tracks,
+        'numdiscs': range(max_disc)
     })
     context.update(csrf(request))
     return HttpResponse(template.render(context))

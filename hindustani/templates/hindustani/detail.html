@@ -6,9 +6,9 @@
 
 <div style="float:left;">
 <table>
-    <tr><th>n</th><th>Title</th></tr>
-    {%for tr in release.track_set.all %}
-        <tr><td>{{tr.position}}</td><td>{{tr.name}}</td></tr>
+    <tr><th>disc</th><th>track</th><th>Title</th></tr>
+    {%for tr in tracks %}
+    <tr><td>{{tr.disc}}</td><td>{{tr.position}}</td><td>{{tr.name}}</td></tr>
     {% endfor %}
 </table>
 </div><div style="float:left;">
@@ -37,10 +37,12 @@
         <input type="hidden" name="country" value="IN">
         <input type="hidden" name="edit_note" value="">
         <input type="hidden" name="artist_credit.names.0.name" value="{{release.artist}}">
-        <input type="hidden" name="mediums.0.format" value="Digital Media">
+        {% for i in numdiscs %}
+        <input type="hidden" name="mediums.{{i}}.format" value="CD">
+        {% endfor %}
         {% for tr in release.track_set.all %}
-            <input type="hidden" name="mediums.0.track.{{tr.position|add:-1}}.name" value="{{tr.name}}">
-            <input type="hidden" name="mediums.0.track.{{tr.position|add:-1}}.length" value="{{tr.length}}">
+        <input type="hidden" name="mediums.{{tr.disc|add:-1}}.track.{{tr.position|add:-1}}.name" value="{{tr.name}}">
+        <input type="hidden" name="mediums.{{tr.disc|add:-1}}.track.{{tr.position|add:-1}}.length" value="{{tr.length}}">
             {% endfor %}
         <input type="submit" value="Add release to musicbrainz">
     </form>
