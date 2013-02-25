@@ -1,9 +1,16 @@
+<html>
+    <head>
+        <title>Carnatic release seeder</title>
+    </head>
+    <body>
+
 {% for r in releases %}
 
-<li><a href="/musicbrainz-seed/{{r.albumid}}">
+<li><a href="{%url c-detail releaseid=r.albumid %}">
     {% if r.mbid %}<strike>{%endif%}
     {{r.artist}} - {{r.title}}
     {% if r.mbid %}</strike>{%endif%}
 </a>
 
 {% endfor %}
+</body></html>

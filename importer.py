@@ -8,7 +8,7 @@ from mbimport import settings
 from django.core.management import setup_environ
 setup_environ(settings)
 
-from mbimport.models import *
+from carnatic.models import *
 
 def pairwise(iterable):
     "s -> (s0,s1), (s2,s3), (s4, s5), ..."
