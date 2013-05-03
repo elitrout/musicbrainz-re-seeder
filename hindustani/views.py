@@ -17,15 +17,11 @@ def home(request):
     })
     return HttpResponse(template.render(context))
 
-def image(request, releaseid):
+
+def image(request, releaseid, num):
     release = Release.objects.get(id=releaseid)
-    track = release.track_set.all()[0]
-    file_loc = track.filename
-    f = eyed3.load(file_loc)
-    images = f.tag.frame_set["APIC"]
-    fronts = [i for i in images if i.picture_type == ImageFrame.FRONT_COVER]
-    img = fronts[0]
-    resp = HttpResponse(img.image_data, "image/jpeg")
+    contents = release.get_image(int(num))
+    resp = HttpResponse(contents, "image/jpeg")
 
     return resp
 

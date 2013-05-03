@@ -12,7 +12,9 @@
     {% endfor %}
 </table>
 </div><div style="float:left;">
-<img src="{%url h-image releaseid=release.id %}" width="300px">
+{% for i in release.num_images %}
+<a target="_blank" href="{%url h-image releaseid=release.id, num=i %}"><img src="{%url h-image releaseid=release.id, num=i %}" width="300px"></a><br>
+{% endfor %}
 </div>
 <div style="clear:both; padding-top:20px;">
 {% if release.mbid %}
@@ -29,6 +31,9 @@
 {% else %}
     <form method="POST" action="http://musicbrainz.org/release/add" target="_blank">
         <input type="hidden" name="name" value="{{release.title}}">
+        {% if release.year != "None" %}
+        <input type="hidden" name="date.year" value="{{release.year}}">
+        {% endif %}
         <input type="hidden" name="type" value="album">
         <input type="hidden" name="type" value="live">
         <input type="hidden" name="status" value="Official">
