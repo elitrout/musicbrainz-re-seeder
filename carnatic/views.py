@@ -4,7 +4,6 @@ from models import *
 from django.template import Context, loader
 from django.core.context_processors import csrf
 
-import eyed3
 import os
 
 def home(request):

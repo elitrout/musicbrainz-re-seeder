@@ -1,5 +1,4 @@
 from django.db import models
-import eyed3
 
 class Release(models.Model):
     title = models.CharField(max_length=200)

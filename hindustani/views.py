@@ -2,9 +2,7 @@ from django.http import HttpResponse
 from models import *
 from django.template import Context, loader
 from django.core.context_processors import csrf
-from eyed3.id3.frames import ImageFrame
 
-import eyed3
 import os
 
 def home(request):

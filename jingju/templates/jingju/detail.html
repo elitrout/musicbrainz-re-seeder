@@ -1,0 +1,56 @@
+<html>
+    <head><title>Jingju release: {{release.title}}</title></head>
+    <body>
+<h1>{{release.artist}} - {{release.title}}</h1>
+<a href="{%url 'jhome' %}">Return to list</a><p>
+
+<div style="float:left;">
+<table>
+    <tr><th>disc</th><th>track</th><th>Title</th></tr>
+    {%for tr in tracks %}
+    <tr><td>{{tr.disc}}</td><td>{{tr.position}}</td><td>{{tr.name}}</td></tr>
+    {% endfor %}
+</table>
+</div><div style="float:left;">
+</div>
+<div style="clear:both; padding-top:20px;">
+
+    <form method="POST" action="http://musicbrainz.org/release/add" target="_blank">
+        <input type="hidden" name="name" value="{{release.title}}">
+        {% if release.year != "None" %}
+        <input type="hidden" name="date.year" value="{{release.year}}">
+        {% endif %}
+        <input type="hidden" name="type" value="album">
+        <input type="hidden" name="type" value="live">
+        <input type="hidden" name="status" value="Official">
+        <input type="hidden" name="language" value="zho">
+        <input type="hidden" name="script" value="hans">
+        <input type="hidden" name="country" value="CN">
+        <input type="hidden" name="edit_note" value="">
+
+        {% if release.reldate %}
+        <input type="hidden" name="events.0.date.year" value="{{release.reldate}}">
+        <input type="hidden" name="country" value="CN">
+        {% endif %}
+
+        <input type="hidden" name="barcode" value="{{release.barcode}}">
+        <input type="hidden" name="labels.0.name" value="{{release.label}}">
+        <input type="hidden" name="labels.0.catalog_number" value="{{release.catno}}">
+        <input type="hidden" name="artist_credit.names.0.name" value="{{release.artist}}">
+        {% for i in numdiscs %}
+        <input type="hidden" name="mediums.{{i}}.format" value="CD">
+        {% endfor %}
+        {% for tr in release.track_set.all %}
+        <input type="hidden" name="mediums.{{tr.disc|add:-1}}.track.{{tr.position|add:-1}}.name" value="{{tr.name}}">
+        <input type="hidden" name="mediums.{{tr.disc|add:-1}}.track.{{tr.position|add:-1}}.length" value="{{tr.fixed_length}}">
+            {% endfor %}
+        <input type="submit" value="Add release to musicbrainz">
+    </form>
+    <form method="POST">{% csrf_token %}
+        When release is created, click update release
+        <input type="submit" name="submit" value="Update release">
+    </form>
+
+</div>
+</body>
+</html>

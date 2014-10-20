@@ -1,0 +1,15 @@
+    <html>
+    <head>
+        <title>Jingju release seeder</title>
+    </head>
+    <body>
+{% for r in releases %}
+
+<li><a href="{%url 'jdetail' releaseid=r.id %}">
+    {% if r.done %}<strike>{%endif%}
+    {{r.artist}} - {{r.title}}
+    {% if r.done %}</strike>{%endif%}
+</a>
+
+{% endfor %}
+</body></html>
