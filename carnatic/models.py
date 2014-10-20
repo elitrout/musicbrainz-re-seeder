@@ -22,6 +22,10 @@ class Track(models.Model):
     position = models.IntegerField()
     length = models.CharField(max_length=10)
 
+    @property
+    def fixed_length(self):
+        return self.length.lower().replace("o", "0")
+
     def __unicode__(self):
         return self.name
 

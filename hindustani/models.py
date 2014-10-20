@@ -34,6 +34,10 @@ class Track(models.Model):
     filename = models.CharField(max_length=255)
     disc = models.IntegerField()
 
+    @property
+    def fixed_length(self):
+        return self.length.lower().replace("o", "0")
+
     def __unicode__(self):
         return self.name
 

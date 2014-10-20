@@ -47,7 +47,7 @@
         {% endfor %}
         {% for tr in release.track_set.all %}
         <input type="hidden" name="mediums.{{tr.disc|add:-1}}.track.{{tr.position|add:-1}}.name" value="{{tr.name}}">
-        <input type="hidden" name="mediums.{{tr.disc|add:-1}}.track.{{tr.position|add:-1}}.length" value="{{tr.length}}">
+        <input type="hidden" name="mediums.{{tr.disc|add:-1}}.track.{{tr.position|add:-1}}.length" value="{{tr.fixed_length}}">
             {% endfor %}
         <input type="submit" value="Add release to musicbrainz">
     </form>
