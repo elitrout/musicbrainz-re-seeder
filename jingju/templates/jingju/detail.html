@@ -6,9 +6,9 @@
 
 <div style="float:left;">
 <table>
-    <tr><th>disc</th><th>track</th><th>Title</th></tr>
+    <tr><th>disc</th><th>track</th><th>Title</th><th>artist</th></tr>
     {%for tr in tracks %}
-    <tr><td>{{tr.disc}}</td><td>{{tr.position}}</td><td>{{tr.name}}</td></tr>
+    <tr><td>{{tr.disc}}</td><td>{{tr.position}}</td><td>{{tr.name}}</td><td>{{tr.artists}}</td></tr>
     {% endfor %}
 </table>
 </div><div style="float:left;">
@@ -17,8 +17,8 @@
 
     <form method="POST" action="http://musicbrainz.org/release/add" target="_blank">
         <input type="hidden" name="name" value="{{release.title}}">
-        {% if release.year != "None" %}
-        <input type="hidden" name="date.year" value="{{release.year}}">
+        {% if release.reldate != "None" %}
+        <input type="hidden" name="date.year" value="{{release.reldate}}">
         {% endif %}
         <input type="hidden" name="type" value="album">
         <input type="hidden" name="type" value="live">
@@ -42,7 +42,12 @@
         {% endfor %}
         {% for tr in release.track_set.all %}
         <input type="hidden" name="mediums.{{tr.disc|add:-1}}.track.{{tr.position|add:-1}}.name" value="{{tr.name}}">
-        <input type="hidden" name="mediums.{{tr.disc|add:-1}}.track.{{tr.position|add:-1}}.length" value="{{tr.fixed_length}}">
+        {% for i, name in tr.artist_list %}
+        <input type="hidden" name="mediums.{{tr.disc|add:-1}}.track.{{tr.position|add:-1}}.artist_credit.names.{{i}}.name" value="{{name}}">
+        {% if not forloop.last %}
+        <input type="hidden" name="mediums.{{tr.disc|add:-1}}.track.{{tr.position|add:-1}}.artist_credit.names.{{i}}.join_phrase" value="，">
+        {% endif %}
+        {% endfor %}
             {% endfor %}
         <input type="submit" value="Add release to musicbrainz">
     </form>
